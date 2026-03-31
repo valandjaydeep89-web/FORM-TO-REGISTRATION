@@ -2,71 +2,35 @@
 <html>
 <head>
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff3c00, #ff8c00); /* red + orange */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#2196f3,#4caf50);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
 
-/* Form Box */
-form{
-    background: rgba(255,255,255,0.95);
-    padding: 30px;
-    border-radius: 20px;
-    width: 400px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+        form{
+            background:white;
+            padding:25px;
+            border-radius:20px;
+            width:400px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.3);
+        }
 
-/* Heading */
-h1, h2{
-    text-align: center;
-    color: #ff3c00;
-}
+        button{
+            background:#2196f3;
+            color:white;
+            padding:10px;
+            border:none;
+            border-radius:20px;
+            cursor:pointer;
+        }
 
-/* Labels */
-label{
-    font-weight: bold;
-    color: #333;
-}
-
-/* Inputs */
-input, select, textarea{
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    transition: 0.3s;
-}
-
-/* Input Focus Effect */
-input:focus, select:focus, textarea:focus{
-    outline: none;
-    border: 2px solid #ff3c00;
-    box-shadow: 0 0 8px rgba(255,60,0,0.4);
-}
-
-/* Button */
-button{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 25px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    background: linear-gradient(135deg, #ff3c00, #ff8c00);
-    transition: 0.3s;
-}
-
-/* Button Hover */
-button:hover{
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(255,60,0,0.5);
-}
+        button:hover{
+            background:#1976d2;
+        }
 </style>
     <title>Registration Form</title>
 </head>
@@ -111,9 +75,13 @@ button:hover{
         <br><br>
 
         <!-- Submit Button -->
-        <input type="submit" value="Register">
+        <button onclick="showMessage()">Register</button>
 
     </form>
-
+<script>
+function showMessage(){
+    alert("Form Submitted Successfully!");
+}
+</script>
 </body>
 </html>
