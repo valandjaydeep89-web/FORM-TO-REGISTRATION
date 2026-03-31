@@ -4,60 +4,68 @@
 <style>
 body{
     font-family: Arial, sans-serif;
-    background-color: black;      /* black background */
-    color: white;
+    background: linear-gradient(135deg, #ff3c00, #ff8c00); /* red + orange */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-/* Form Design */
+/* Form Box */
 form{
-    background: #111;             /* dark form */
-    padding: 25px;
+    background: rgba(255,255,255,0.95);
+    padding: 30px;
     border-radius: 20px;
     width: 400px;
-    box-shadow: 0 0 15px rgba(255,0,0,0.5); /* red glow */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Heading */
+h1, h2{
+    text-align: center;
+    color: #ff3c00;
 }
 
 /* Labels */
 label{
     font-weight: bold;
-    color: red;
+    color: #333;
 }
 
 /* Inputs */
 input, select, textarea{
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin: 8px 0 15px;
-    border-radius: 5px;
-    border: 2px solid red;
-    background-color: #000;
-    color: white;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
 }
 
-/* Heading */
-h1{
-    color: red;
-    text-align: center;
+/* Input Focus Effect */
+input:focus, select:focus, textarea:focus{
+    outline: none;
+    border: 2px solid #ff3c00;
+    box-shadow: 0 0 8px rgba(255,60,0,0.4);
 }
 
 /* Button */
 button{
     width: 100%;
-    padding: 10px;
-    background-color: red;
-    color: white;
+    padding: 12px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
+    background: linear-gradient(135deg, #ff3c00, #ff8c00);
+    transition: 0.3s;
 }
 
 /* Button Hover */
 button:hover{
-    background-color: darkred;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255,60,0,0.5);
 }
 </style>
     <title>Registration Form</title>
