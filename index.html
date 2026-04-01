@@ -1,182 +1,193 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Premium Registration Form</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Registration</title>
 
 <style>
-
-/* ---------- BODY ---------- */
 body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#ffb300,#ff6f00,#d32f2f);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-    transition:0.4s;
+margin:0;
+font-family:Arial;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:linear-gradient(135deg,#ffd700,#ffb300,#ff5722,#b71c1c);
+transition:.4s;
 }
 
-/* DARK MODE */
 body.dark{
-    background:linear-gradient(135deg,#1a1a1a,#000000);
-    color:white;
+background:#111;
+color:white;
 }
 
-/* ---------- TITLE ---------- */
 h2{
-    color:white;
-    margin-bottom:15px;
-    text-shadow:0 3px 8px rgba(0,0,0,0.4);
+color:white;
+margin-bottom:15px;
 }
 
-/* ---------- FORM CARD ---------- */
 form{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    width:380px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.4);
-    animation:fadeIn 1s ease;
+background:white;
+padding:25px;
+border-radius:18px;
+width:340px;
+box-shadow:0 15px 35px rgba(0,0,0,.35);
 }
 
 body.dark form{
-    background:#222;
+background:#222;
 }
 
-/* ---------- INPUTS ---------- */
-input, select{
-    width:100%;
-    padding:10px;
-    margin-top:6px;
-    margin-bottom:15px;
-    border-radius:8px;
-    border:2px solid #ffd54f;
-    outline:none;
-    transition:0.3s;
+label{
+font-weight:bold;
+font-size:14px;
 }
 
-input:focus, select:focus{
-    border-color:#ff6f00;
-    box-shadow:0 0 8px #ff9800;
+input,select{
+width:100%;
+padding:10px;
+margin:6px 0 12px;
+border-radius:8px;
+border:2px solid #ffb300;
+outline:none;
+transition:.3s;
 }
 
-/* ---------- PASSWORD BOX ---------- */
+input:focus,select:focus{
+border-color:#ff5722;
+box-shadow:0 0 6px #ff9800;
+}
+
+.error{
+border-color:red !important;
+}
+
 .password-box{
-    position:relative;
+position:relative;
 }
 
 .eye{
-    position:absolute;
-    right:10px;
-    top:38px;
-    cursor:pointer;
-    font-size:18px;
+position:absolute;
+right:10px;
+top:10px;
+cursor:pointer;
 }
 
-/* ---------- BUTTON ---------- */
 button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:25px;
-    font-size:16px;
-    color:white;
-    cursor:pointer;
-    background:linear-gradient(45deg,#ffd700,#ff9800,#ff5722,#d32f2f);
-    background-size:300%;
-    transition:0.4s;
+width:100%;
+padding:12px;
+border:none;
+border-radius:25px;
+font-size:16px;
+color:white;
+cursor:pointer;
+background:linear-gradient(45deg,#ffd700,#ff9800,#ff5722,#d32f2f);
+transition:.3s;
 }
 
 button:hover{
-    background-position:right;
-    transform:scale(1.05);
+transform:scale(1.05);
 }
 
-/* ---------- DARK MODE BUTTON ---------- */
-.dark-toggle{
-    position:absolute;
-    top:20px;
-    right:20px;
-    background:white;
-    border-radius:50%;
-    padding:10px;
-    cursor:pointer;
-    font-size:20px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.3);
+.darkbtn{
+position:absolute;
+top:15px;
+right:15px;
+border:none;
+border-radius:50%;
+padding:10px;
+cursor:pointer;
+font-size:18px;
 }
 
-/* ---------- ANIMATION ---------- */
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(30px);}
-    to{opacity:1; transform:translateY(0);}
+.msg{
+margin-top:10px;
+font-weight:bold;
+text-align:center;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- DARK MODE BUTTON -->
-<div class="dark-toggle" onclick="toggleDark()">🌙</div>
+<button class="darkbtn" onclick="toggleDark()">🌙</button>
 
-<h2>✨ Premium Registration Form</h2>
+<h2>Registration Form</h2>
 
-<form onsubmit="return showMessage()">
+<form id="form">
 
 <label>Full Name</label>
-<input type="text" required>
+<input type="text" id="name" placeholder="Enter your full name" required>
 
 <label>Email</label>
-<input type="email" required>
+<input type="email" id="email" placeholder="Enter your email" required>
 
 <label>Password</label>
 <div class="password-box">
-<input type="password" id="password" required>
-<span class="eye" onclick="togglePassword()">👁️</span>
+<input type="password" id="pass" placeholder="Create password" required>
+<span class="eye" onclick="togglePass()">👁</span>
 </div>
 
 <label>Gender</label><br>
-<input type="radio" name="gender"> Male
-<input type="radio" name="gender"> Female
-<input type="radio" name="gender"> Other
+<input type="radio" name="g" required> Male
+<input type="radio" name="g"> Female
+<input type="radio" name="g"> Other
 <br><br>
 
 <label>Course / Interest</label>
-<select required>
-<option value="">--Select Course--</option>
+<select id="course" required>
+<option value="">Select Course</option>
 <option>Web Development</option>
 <option>AI / Machine Learning</option>
 <option>Data Science</option>
 <option>App Development</option>
 </select>
 
-<button type="submit">Create Premium Account</button>
+<button type="submit">Register Now</button>
+
+<div class="msg" id="msg"></div>
 
 </form>
 
 <script>
-
-/* PASSWORD SHOW/HIDE */
-function togglePassword(){
-    let pass = document.getElementById("password");
-    pass.type = pass.type === "password" ? "text" : "password";
+function togglePass(){
+let p=document.getElementById("pass");
+p.type=p.type==="password"?"text":"password";
 }
 
-/* DARK MODE */
 function toggleDark(){
-    document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
 }
 
-/* FORM MESSAGE */
-function showMessage(){
-    alert("🎉 Registration Successful!");
-    return false;
-}
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
 
+let name=document.getElementById("name");
+let email=document.getElementById("email");
+let pass=document.getElementById("pass");
+let course=document.getElementById("course");
+let msg=document.getElementById("msg");
+
+let valid=true;
+
+[name,email,pass,course].forEach(i=>{
+i.classList.remove("error");
+if(i.value.trim()===""){
+i.classList.add("error");
+valid=false;
+}
+});
+
+if(valid){
+msg.style.color="green";
+msg.innerText="Registration Successful ✅";
+this.reset();
+}else{
+msg.style.color="red";
+msg.innerText="Please fill all required fields!";
+}
+});
 </script>
 
 </body>
