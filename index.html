@@ -2,73 +2,132 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registration Form</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Registration Form</title>
 
 <style>
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,Arial;}
+
 body{
-font-family:Arial;
-background:#f4f6f9;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-margin:0;
-transition:0.4s;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+transition:.4s;
 }
+
 .container{
 background:white;
-padding:25px;
-border-radius:10px;
-width:320px;
-box-shadow:0 0 15px rgba(0,0,0,0.2);
+padding:35px;
+width:350px;
+border-radius:15px;
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+position:relative;
 }
-h2{text-align:center;margin-bottom:15px;}
-input{
+
+h2{
+text-align:center;
+margin-bottom:20px;
+color:#333;
+}
+
+.input-box{
+position:relative;
+margin:22px 0;
+}
+
+.input-box input{
 width:100%;
-padding:10px;
-margin:8px 0;
-border:1px solid #ccc;
-border-radius:5px;
+padding:12px;
+border:2px solid #ddd;
+border-radius:8px;
+outline:none;
+font-size:15px;
+background:transparent;
 }
-button{
-width:100%;
-padding:10px;
-border:none;
-background:#007bff;
-color:white;
-border-radius:5px;
-cursor:pointer;
-font-size:16px;
+
+.input-box label{
+position:absolute;
+left:12px;
+top:12px;
+color:#777;
+background:white;
+padding:0 5px;
+transition:.3s;
+pointer-events:none;
 }
-button:hover{background:#0056b3;}
-.error{color:red;font-size:13px;}
-.toggle{
+
+.input-box input:focus+label,
+.input-box input:valid+label{
+top:-8px;
+font-size:12px;
+color:#4facfe;
+}
+
+.error{
+color:red;
+font-size:12px;
+margin-top:3px;
+}
+
+.password-eye{
 position:absolute;
 right:10px;
-top:10px;
+top:12px;
 cursor:pointer;
 }
-.password-box{position:relative;}
-.dark{
-background:#121212;
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:linear-gradient(135deg,#4facfe,#00c6ff);
 color:white;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
 }
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.mode{
+margin-bottom:12px;
+background:#222;
+}
+
+.success{
+text-align:center;
+color:green;
+margin-top:10px;
+font-weight:bold;
+display:none;
+}
+
+.dark{
+background:linear-gradient(135deg,#141e30,#243b55);
+}
+
 .dark .container{
 background:#1e1e1e;
-}
-.dark input{
-background:#333;
 color:white;
-border:1px solid #555;
 }
-.mode-btn{
-margin-bottom:10px;
-background:black;
+
+.dark input{
+color:white;
+border:2px solid #555;
 }
-.dark .mode-btn{
-background:#ffc107;
-color:black;
+
+.dark label{
+background:#1e1e1e;
+color:#ccc;
 }
+
 </style>
 </head>
 
@@ -76,28 +135,40 @@ color:black;
 
 <div class="container">
 
-<button class="mode-btn" onclick="toggleMode()">Dark Mode</button>
+<button class="mode" onclick="toggleMode()">Toggle Dark Mode</button>
 
-<h2>Register</h2>
+<h2>Register Now</h2>
 
 <form id="form">
 
-<input type="text" id="name" placeholder="Full Name" required>
+<div class="input-box">
+<input type="text" id="name" required>
+<label>Full Name</label>
 <div id="nameError" class="error"></div>
-
-<input type="email" id="email" placeholder="Email Address" required>
-<div id="emailError" class="error"></div>
-
-<div class="password-box">
-<input type="password" id="password" placeholder="Password" required>
-<span class="toggle" onclick="showPassword()">👁️</span>
 </div>
+
+<div class="input-box">
+<input type="email" id="email" required>
+<label>Email Address</label>
+<div id="emailError" class="error"></div>
+</div>
+
+<div class="input-box">
+<input type="password" id="password" required>
+<label>Password</label>
+<span class="password-eye" onclick="togglePassword()">👁</span>
 <div id="passError" class="error"></div>
+</div>
 
-<input type="tel" id="phone" placeholder="Phone Number" required>
+<div class="input-box">
+<input type="tel" id="phone" required>
+<label>Phone Number</label>
 <div id="phoneError" class="error"></div>
+</div>
 
-<button type="submit">Register Now</button>
+<button type="submit">Create Account</button>
+
+<div class="success" id="successMsg">✅ Registration Successful</div>
 
 </form>
 
@@ -109,53 +180,68 @@ function toggleMode(){
 document.body.classList.toggle("dark");
 }
 
-function showPassword(){
-let pass=document.getElementById("password");
-pass.type=pass.type==="password"?"text":"password";
+function togglePassword(){
+let p=document.getElementById("password");
+p.type=p.type==="password"?"text":"password";
 }
 
 document.getElementById("form").addEventListener("submit",function(e){
 
+e.preventDefault();
+
 let valid=true;
 
-let name=document.getElementById("name").value.trim();
-let email=document.getElementById("email").value.trim();
-let password=document.getElementById("password").value.trim();
-let phone=document.getElementById("phone").value.trim();
+let name=nameValue();
+let email=emailValue();
+let pass=passValue();
+let phone=phoneValue();
 
-document.getElementById("nameError").innerHTML="";
-document.getElementById("emailError").innerHTML="";
-document.getElementById("passError").innerHTML="";
-document.getElementById("phoneError").innerHTML="";
-
-if(name.length<3){
-document.getElementById("nameError").innerHTML="Enter valid name";
-valid=false;
+if(valid){
+document.getElementById("successMsg").style.display="block";
 }
-
-let emailPattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-if(!email.match(emailPattern)){
-document.getElementById("emailError").innerHTML="Invalid email format";
-valid=false;
-}
-
-if(password.length<6){
-document.getElementById("passError").innerHTML="Password must be 6+ characters";
-valid=false;
-}
-
-if(phone.length!=10 || isNaN(phone)){
-document.getElementById("phoneError").innerHTML="Enter valid 10 digit number";
-valid=false;
-}
-
-if(!valid){
-e.preventDefault();
-}else{
-alert("Registration Successful ✅");
-}
-
 });
+
+function nameValue(){
+let v=document.getElementById("name").value.trim();
+if(v.length<3){
+nameError.innerHTML="Minimum 3 characters";
+return false;
+}
+nameError.innerHTML="";
+return true;
+}
+
+function emailValue(){
+let v=document.getElementById("email").value.trim();
+let pattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+if(!v.match(pattern)){
+emailError.innerHTML="Invalid email";
+return false;
+}
+emailError.innerHTML="";
+return true;
+}
+
+function passValue(){
+let v=document.getElementById("password").value.trim();
+if(v.length<6){
+passError.innerHTML="Password must be 6+ chars";
+return false;
+}
+passError.innerHTML="";
+return true;
+}
+
+function phoneValue(){
+let v=document.getElementById("phone").value.trim();
+if(v.length!=10 || isNaN(v)){
+phoneError.innerHTML="Enter valid number";
+return false;
+}
+phoneError.innerHTML="";
+return true;
+}
+
 </script>
 
 </body>
