@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Premium Form</title>
+<title>Ultra Premium Form</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,Arial}
@@ -23,111 +23,114 @@ color:#fff;
 }
 
 .container{
-width:360px;
-background:white;
-padding:30px;
+width:380px;
+background:#fff;
+padding:28px;
 border-radius:18px;
 box-shadow:0 15px 40px rgba(0,0,0,.25);
-transition:.4s;
 animation:fade .6s ease;
 }
 
-body.dark .container{
-background:#1e1e1e;
-}
+body.dark .container{background:#1e1e1e}
 
 @keyframes fade{
 from{opacity:0;transform:translateY(25px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-h2{
-text-align:center;
-margin-bottom:20px;
-font-weight:600;
-}
+h2{text-align:center;margin-bottom:15px}
 
-.input-group{
-position:relative;
-margin-bottom:18px;
-}
+label{font-size:13px;font-weight:600}
 
-input{
+.input-group{margin-bottom:14px;position:relative}
+
+input,select{
 width:100%;
-padding:12px;
+padding:11px;
 border-radius:8px;
 border:1px solid #ccc;
+margin-top:4px;
 outline:none;
-font-size:15px;
 transition:.3s;
 }
 
-input:focus{
-border-color:blue;
-box-shadow:0 0 8px rgba(0,0,255,.3);
+input:focus,select:focus{
+border-color:#0072ff;
+box-shadow:0 0 8px rgba(0,114,255,.3);
 }
 
 .eye{
 position:absolute;
 right:10px;
-top:50%;
-transform:translateY(-50%);
+top:36px;
 cursor:pointer;
-font-size:18px;
 }
 
-.buttons{
-display:flex;
-gap:10px;
-margin-top:10px;
+.error{
+color:red;
+font-size:12px;
+display:none;
 }
+
+.strength{
+height:6px;
+border-radius:6px;
+margin-top:5px;
+background:#ddd;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:red;
+transition:.3s;
+}
+
+.buttons{display:flex;gap:10px;margin-top:12px}
 
 button{
 flex:1;
 padding:12px;
 border:none;
 border-radius:10px;
-font-size:15px;
 cursor:pointer;
-color:white;
 font-weight:600;
+color:white;
 transition:.3s;
 }
 
-.submit{
-background:linear-gradient(45deg,#00c6ff,#0072ff);
-}
+.submit{background:linear-gradient(45deg,#00c6ff,#0072ff)}
+.reset{background:linear-gradient(45deg,#ffb347,#ffcc33);color:black}
 
-.submit:hover{
+button:hover{
 transform:scale(1.05);
 box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
-.reset{
-background:linear-gradient(45deg,#ffb347,#ffcc33);
-color:black;
-}
-
-.reset:hover{
-transform:scale(1.05);
-}
-
 .darkbtn{
-margin-top:15px;
+margin-top:12px;
 width:100%;
 background:linear-gradient(45deg,#232526,#414345);
 }
 
-.darkbtn:hover{
-transform:scale(1.05);
+.success{
+display:none;
+margin-top:12px;
+padding:10px;
+background:#28a745;
+color:white;
+border-radius:8px;
+text-align:center;
 }
 
-.footer{
-text-align:center;
-margin-top:12px;
+.checkbox{
+display:flex;
+gap:8px;
 font-size:13px;
-opacity:.7;
+margin-top:6px;
 }
+
 </style>
 </head>
 
@@ -135,21 +138,63 @@ opacity:.7;
 
 <div class="container">
 
-<h2>✨ Premium Registration</h2>
+<h2>✨ Professional Registration</h2>
 
 <form id="form">
 
 <div class="input-group">
-<input type="text" placeholder="👤 Full Name" required>
+<label>Full Name *</label>
+<input type="text" id="name" required>
 </div>
 
 <div class="input-group">
-<input type="email" placeholder="📧 Email Address" required>
+<label>Email *</label>
+<input type="email" id="email" required>
+<span class="error" id="emailError">Invalid Email</span>
 </div>
 
 <div class="input-group">
-<input type="password" id="password" placeholder="🔒 Password" required>
+<label>Phone *</label>
+<input type="tel" id="phone" required>
+</div>
+
+<div class="input-group">
+<label>Gender *</label>
+<select required>
+<option value="">Select</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>Country *</label>
+<select required>
+<option>India</option>
+<option>USA</option>
+<option>UK</option>
+<option>Canada</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>Password *</label>
+<input type="password" id="password" required>
 <span class="eye" onclick="togglePass()">👁️</span>
+
+<div class="strength"><div class="bar" id="bar"></div></div>
+</div>
+
+<div class="input-group">
+<label>Confirm Password *</label>
+<input type="password" id="confirm" required>
+<span class="error" id="passError">Passwords not matching</span>
+</div>
+
+<div class="checkbox">
+<input type="checkbox" id="terms" required>
+<label>I agree to Terms & Conditions</label>
 </div>
 
 <div class="buttons">
@@ -161,7 +206,7 @@ opacity:.7;
 
 <button class="darkbtn" onclick="darkMode()">🌙 Dark Mode</button>
 
-<div class="footer">Premium UI • Professional Form</div>
+<div class="success" id="success">✅ Form Submitted Successfully!</div>
 
 </div>
 
@@ -175,9 +220,36 @@ function darkMode(){
 document.body.classList.toggle("dark");
 }
 
+const pass=document.getElementById("password");
+const bar=document.getElementById("bar");
+
+pass.addEventListener("input",()=>{
+let v=pass.value.length;
+if(v<4){bar.style.width="30%";bar.style.background="red";}
+else if(v<8){bar.style.width="60%";bar.style.background="orange";}
+else{bar.style.width="100%";bar.style.background="green";}
+});
+
 document.getElementById("form").addEventListener("submit",function(e){
 e.preventDefault();
-alert("✅ Form Submitted Successfully!");
+
+let email=document.getElementById("email");
+let confirm=document.getElementById("confirm");
+let passError=document.getElementById("passError");
+let emailError=document.getElementById("emailError");
+
+emailError.style.display=email.checkValidity()?"none":"block";
+
+if(pass.value!==confirm.value){
+passError.style.display="block";
+return;
+}else{
+passError.style.display="none";
+}
+
+document.getElementById("success").style.display="block";
+this.reset();
+bar.style.width="0%";
 });
 </script>
 
