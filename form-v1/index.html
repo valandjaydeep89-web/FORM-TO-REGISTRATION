@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Smart Form</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+transition:.4s;
+}
+
+body.dark{
+background:linear-gradient(135deg,#141e30,#243b55);
+color:#fff;
+}
+
+.container{
+width:400px;
+background:#fff;
+padding:28px;
+border-radius:18px;
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+body.dark .container{background:#1f1f1f}
+
+h2{text-align:center;margin-bottom:10px}
+
+/* Progress Bar */
+.progress{
+height:8px;
+background:#ddd;
+border-radius:10px;
+margin-bottom:15px;
+overflow:hidden;
+}
+.progress-bar{
+height:100%;
+width:0%;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+transition:.3s;
+}
+
+/* Floating Inputs */
+.field{position:relative;margin-bottom:18px}
+
+.field input,.field select{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+background:none;
+}
+
+.field label{
+position:absolute;
+top:12px;
+left:12px;
+font-size:13px;
+color:#777;
+transition:.3s;
+background:#fff;
+padding:0 4px;
+}
+
+body.dark .field label{background:#1f1f1f}
+
+.field input:focus+label,
+.field input:not(:placeholder-shown)+label,
+.field select:focus+label{
+top:-8px;
+font-size:11px;
+color:#0072ff;
+}
+
+/* Strength */
+.strength{height:6px;background:#ddd;border-radius:6px;margin-top:5px}
+.bar{height:100%;width:0%;background:red}
+
+/* Buttons */
+.buttons{display:flex;gap:10px}
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+color:white;
+transition:.3s;
+}
+
+.submit{background:linear-gradient(45deg,#00c6ff,#0072ff)}
+.reset{background:linear-gradient(45deg,#ffb347,#ffcc33);color:black}
+
+button:hover{transform:scale(1.05)}
+
+.darkbtn{
+margin-top:10px;
+width:100%;
+background:#333;
+}
+
+.counter{
+font-size:11px;
+text-align:right;
+color:#666;
+}
+
+/* Success Card */
+.success{
+display:none;
+margin-top:12px;
+padding:15px;
+background:#28a745;
+color:white;
+border-radius:10px;
+text-align:center;
+animation:fade .5s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:scale(.9)}
+to{opacity:1;transform:scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🚀 Smart Registration</h2>
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+<form id="form">
+
+<div class="field">
+<input type="text" id="name" placeholder=" " required>
+<label>Full Name *</label>
+<div class="counter" id="count">0/30</div>
+</div>
+
+<div class="field">
+<input type="email" id="email" placeholder=" " required>
+<label>Email *</label>
+</div>
+
+<div class="field">
+<input type="tel" id="phone" placeholder=" " required>
+<label>Phone *</label>
+</div>
+
+<div class="field">
+<select id="country" required>
+<option value=""></option>
+<option>India</option>
+<option>USA</option>
+<option>UK</option>
+</select>
+<label>Country *</label>
+</div>
+
+<div class="field">
+<input type="password" id="password" placeholder=" " required>
+<label>Password *</label>
+<div class="strength"><div class="bar" id="bar"></div></div>
+</div>
+
+<div class="field">
+<input type="password" id="confirm" placeholder=" " required>
+<label>Confirm Password *</label>
+</div>
+
+<div style="margin-bottom:12px">
+<input type="checkbox" required> Accept Terms & Conditions
+</div>
+
+<div class="buttons">
+<button class="submit">🚀 Submit</button>
+<button type="reset" class="reset">♻ Reset</button>
+</div>
+
+</form>
+
+<button class="darkbtn" onclick="toggleDark()">🌙 Dark Mode</button>
+
+<div class="success" id="success">
+✅ Registration Successful!
+</div>
+
+</div>
+
+<script>
+
+const inputs=document.querySelectorAll("input,select");
+const progress=document.getElementById("progress");
+
+/* Progress Calculation */
+function updateProgress(){
+let filled=0;
+inputs.forEach(i=>{ if(i.value) filled++; });
+progress.style.width=(filled/inputs.length*100)+"%";
+}
+inputs.forEach(i=>i.addEventListener("input",updateProgress));
+
+/* Character Counter */
+const nameInput=document.getElementById("name");
+const counter=document.getElementById("count");
+nameInput.addEventListener("input",()=>{
+counter.textContent=nameInput.value.length+"/30";
+});
+
+/* Password Strength */
+const pass=document.getElementById("password");
+const bar=document.getElementById("bar");
+
+pass.addEventListener("input",()=>{
+let v=pass.value.length;
+if(v<4){bar.style.width="30%";bar.style.background="red";}
+else if(v<8){bar.style.width="70%";bar.style.background="orange";}
+else{bar.style.width="100%";bar.style.background="green";}
+});
+
+/* Dark Mode */
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+/* Auto Save Form */
+inputs.forEach(i=>{
+i.addEventListener("input",()=>{
+localStorage.setItem(i.id,i.value);
+});
+});
+
+/* Restore Data */
+window.onload=()=>{
+inputs.forEach(i=>{
+if(localStorage.getItem(i.id))
+i.value=localStorage.getItem(i.id);
+});
+updateProgress();
+};
+
+/* Submit */
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
+
+if(pass.value!==document.getElementById("confirm").value){
+alert("Passwords not matching");
+return;
+}
+
+document.getElementById("success").style.display="block";
+localStorage.clear();
+this.reset();
+updateProgress();
+bar.style.width="0%";
+});
+</script>
+
+</body>
+</html>
