@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Registration Form V2</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff512f,#f09819);
+transition:.4s;
+}
+
+body.dark{
+background:linear-gradient(135deg,#141e30,#243b55);
+color:#fff;
+}
+
+.main{
+width:900px;
+height:540px;
+display:flex;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+/* LEFT PANEL */
+.left{
+flex:1;
+background:linear-gradient(135deg,#ffb347,#ffcc33,#ff512f);
+color:white;
+padding:40px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.left h1{
+font-size:32px;
+margin-bottom:15px;
+}
+
+.left p{
+line-height:1.6;
+opacity:.9;
+}
+
+/* RIGHT FORM */
+.right{
+flex:1;
+background:white;
+padding:35px;
+overflow:auto;
+}
+
+body.dark .right{background:#1f1f1f}
+
+h2{text-align:center;margin-bottom:20px}
+
+.field{margin-bottom:15px;position:relative}
+
+input,select{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+transition:.3s;
+}
+
+input:focus{
+border-color:#ff512f;
+box-shadow:0 0 8px rgba(255,81,47,.4);
+}
+
+label{
+font-size:13px;
+font-weight:600;
+}
+
+/* Password eye */
+.eye{
+position:absolute;
+right:10px;
+top:38px;
+cursor:pointer;
+}
+
+/* Strength */
+.strength{
+height:6px;
+background:#ddd;
+margin-top:5px;
+border-radius:5px;
+}
+.bar{height:100%;width:0;background:red}
+
+/* Buttons */
+.buttons{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.submit{
+background:linear-gradient(45deg,#ff512f,#dd2476);
+color:white;
+box-shadow:0 6px 15px rgba(0,0,0,.3);
+}
+
+.reset{
+background:linear-gradient(45deg,#ffd700,#ffb347);
+}
+
+button:hover{
+transform:translateY(-3px) scale(1.04);
+}
+
+/* Dark button */
+.darkbtn{
+margin-top:10px;
+width:100%;
+background:#333;
+color:white;
+}
+
+/* Success */
+.success{
+display:none;
+margin-top:10px;
+background:#28a745;
+color:white;
+padding:12px;
+border-radius:10px;
+text-align:center;
+animation:pop .5s;
+}
+
+@keyframes pop{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main">
+
+<div class="left">
+<h1>🔥 Join Us Today</h1>
+<p>
+Create your premium account and experience a modern,
+professional registration system designed with advanced UI effects.
+</p>
+</div>
+
+<div class="right">
+
+<h2>🚀 Registration</h2>
+
+<form id="form">
+
+<div class="field">
+<label>Full Name</label>
+<input type="text" id="name" required>
+</div>
+
+<div class="field">
+<label>Email</label>
+<input type="email" id="email" required>
+</div>
+
+<div class="field">
+<label>Phone</label>
+<input type="tel" required>
+</div>
+
+<div class="field">
+<label>Course</label>
+<select required>
+<option value="">Select</option>
+<option>Web Development</option>
+<option>AI / ML</option>
+<option>Data Science</option>
+</select>
+</div>
+
+<div class="field">
+<label>Password</label>
+<input type="password" id="password" required>
+<span class="eye" onclick="togglePass()">👁️</span>
+<div class="strength"><div class="bar" id="bar"></div></div>
+</div>
+
+<div class="field">
+<label>Confirm Password</label>
+<input type="password" id="confirm" required>
+</div>
+
+<label><input type="checkbox" required> Accept Terms</label>
+
+<div class="buttons">
+<button class="submit">🚀 Submit</button>
+<button type="reset" class="reset">♻ Reset</button>
+</div>
+
+</form>
+
+<button class="darkbtn" onclick="darkMode()">🌙 Dark Mode</button>
+
+<div class="success" id="success">
+✅ Registration Successful!
+</div>
+
+</div>
+</div>
+
+<script>
+
+function darkMode(){
+document.body.classList.toggle("dark");
+}
+
+function togglePass(){
+let p=document.getElementById("password");
+p.type=p.type==="password"?"text":"password";
+}
+
+/* Password Strength */
+const pass=document.getElementById("password");
+const bar=document.getElementById("bar");
+
+pass.addEventListener("input",()=>{
+let v=pass.value.length;
+if(v<4){bar.style.width="30%";bar.style.background="red";}
+else if(v<8){bar.style.width="70%";bar.style.background="orange";}
+else{bar.style.width="100%";bar.style.background="green";}
+});
+
+/* Submit */
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
+
+if(pass.value!==document.getElementById("confirm").value){
+alert("Password not matching");
+return;
+}
+
+document.getElementById("success").style.display="block";
+this.reset();
+bar.style.width="0";
+});
+
+</script>
+
+</body>
+</html>
